@@ -12,20 +12,20 @@ class Solution:
     
 
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        if not l1 or not l2:
+        if not l1 or not l2: # 判空，如果其中一个为空，直接返回另一个链表（不知道说的对不对）
             return l1 or l2
-        head = l1
-        cary = 0
-        while l1 and l2:
-            l1.val += l2.val + cary
+        head = l1 # 把l1链表指向给head
+        cary = 0 # 设置进位为0
+        while l1 and l2: # 当链表l1 和 l2 都不为空时
+            l1.val += l2.val + cary # 把l1链表的当前结点值 加上 l2链表的当前结点值与进位的和 
 
-            if l1.val >9:
-                cary = 1
-                l1.val = l1.val%10
-            else:
-                cary = 0
-            last_node = l1
-            l1 = l1.next
+            if l1.val >9: # 如果此时 l1结点 的值大于9
+                cary = 1 # 进位加一 （正确情况是cary = (l1.val + l2.val + cary)//10,因为进位不是必须为一，本题特俗，进位最多只能为一）
+                l1.val = l1.val%10 # 在对结点 l1的值进行对10 取余，在把余数赋值给 l1
+            else: # 其他情况
+                cary = 0 # 进位重新设置成0（防止前面加过进位，造成进位乱加）
+            last_node = l1 # 把l1链表的头结点的指向给last_node，形成单向循环链表
+            l1 = l1.next 
             l2 = l2.next
 
         l = l1 or l2
